@@ -1,75 +1,39 @@
-<?xml version="1.0" encoding="UTF-8"?>
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
 
     <modelVersion>4.0.0</modelVersion>
 
     <groupId>io.fabric8.quickstarts</groupId>
-    <artifactId>spring-boot-camel-config</artifactId>
-    <version>1.0-SNAPSHOT</version>
+    <artifactId>spring-boot-camel</artifactId>
+    <version>1.0.0.fuse-750024-redhat-00002</version>
 
-
-    <name>Fabric8 :: Quickstarts :: Spring Boot :: Camel Config</name>
-    <description>Spring Boot example running a Camel route configured using Kubernetes ConfigMaps and Secrets
-    </description>
+    <name>Fabric8 :: Quickstarts :: Spring-Boot :: Camel</name>
+    <description>Spring Boot example running a Camel route</description>
 
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
 
-        <!-- dependency versions -->
-        <camel.version>2.21.2</camel.version>
-        <fabric8.version>2.3.7</fabric8.version>
-        <spring-boot.version>1.5.4.RELEASE</spring-boot.version>
-        <fuse.version>7.8.0.fuse-sb2-780038-redhat-00001</fuse.version>
-
+        <!-- configure the Fuse version you want to use here -->
+        <fuse.bom.version>7.5.0.fuse-750029-redhat-00002</fuse.bom.version>
 
         <!-- maven plugin versions -->
-        <fabric8.maven.plugin.version>3.5.40</fabric8.maven.plugin.version>
         <maven-compiler-plugin.version>3.7.0</maven-compiler-plugin.version>
         <maven-surefire-plugin.version>2.19.1</maven-surefire-plugin.version>
     </properties>
 
     <dependencyManagement>
         <dependencies>
-<!--            <dependency>-->
-<!--                <groupId>io.fabric8</groupId>-->
-<!--                <artifactId>fabric8-project-bom-camel-spring-boot</artifactId>-->
-<!--                <version>${fabric8.version}</version>-->
-<!--                <type>pom</type>-->
-<!--                <scope>import</scope>-->
-<!--            </dependency>-->
             <dependency>
                 <groupId>org.jboss.redhat-fuse</groupId>
                 <artifactId>fuse-springboot-bom</artifactId>
-                <version>${fuse.version}</version>
+                <version>${fuse.bom.version}</version>
                 <type>pom</type>
                 <scope>import</scope>
             </dependency>
-
-<!--            <dependency>-->
-<!--                <groupId>org.springframework.cloud</groupId>-->
-<!--                <artifactId>spring-cloud-dependencies</artifactId>-->
-<!--                <version>Hoxton.SR8</version>-->
-<!--                <type>pom</type>-->
-<!--                <scope>import</scope>-->
-<!--            </dependency>-->
-<!--            <dependency>-->
-<!--                <groupId>org.springframework.boot</groupId>-->
-<!--                <artifactId>spring-boot-dependencies</artifactId>-->
-<!--                <version>${spring-boot.version}</version>-->
-<!--                <type>pom</type>-->
-<!--                <scope>import</scope>-->
-<!--            </dependency>-->
-<!--            <dependency>-->
-<!--                <groupId>org.apache.camel</groupId>-->
-<!--                <artifactId>camel-spring-boot-dependencies</artifactId>-->
-<!--                <version>${camel.version}</version>-->
-<!--                <type>pom</type>-->
-<!--                <scope>import</scope>-->
-<!--            </dependency>-->
         </dependencies>
     </dependencyManagement>
+
 
     <dependencies>
 
@@ -78,7 +42,6 @@
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-actuator</artifactId>
         </dependency>
-
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-web</artifactId>
@@ -94,7 +57,6 @@
             <artifactId>spring-boot-starter-undertow</artifactId>
         </dependency>
 
-        <!-- Camel -->
         <dependency>
             <groupId>org.apache.camel</groupId>
             <artifactId>camel-spring-boot-starter</artifactId>
@@ -103,19 +65,16 @@
         <dependency>
             <groupId>org.apache.activemq</groupId>
             <artifactId>activemq-camel</artifactId>
+            <version>5.15.15</version>
         </dependency>
 
+        <!-- https://mvnrepository.com/artifact/com.github.javafaker/javafaker -->
         <dependency>
             <groupId>com.github.javafaker</groupId>
             <artifactId>javafaker</artifactId>
             <version>1.0.2</version>
         </dependency>
 
-        <!-- Spring-Cloud-Kubernetes -->
-<!--        <dependency>-->
-<!--            <groupId>org.springframework.cloud</groupId>-->
-<!--            <artifactId>spring-cloud-starter-kubernetes-all</artifactId>-->
-<!--        </dependency>-->
 
         <!-- Test -->
         <dependency>
@@ -150,16 +109,9 @@
     <build>
         <defaultGoal>spring-boot:run</defaultGoal>
 
-        <testResources>
-            <testResource>
-                <directory>src/test/resources</directory>
-                <filtering>true</filtering>
-            </testResource>
-        </testResources>
-
         <plugins>
-            <!-- Compiler plugin enforces Java 1.8 compatibility and activates annotation processors -->
             <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-compiler-plugin</artifactId>
                 <version>${maven-compiler-plugin.version}</version>
                 <configuration>
@@ -167,7 +119,6 @@
                     <target>1.8</target>
                 </configuration>
             </plugin>
-
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-surefire-plugin</artifactId>
@@ -184,7 +135,7 @@
             <plugin>
                 <groupId>org.jboss.redhat-fuse</groupId>
                 <artifactId>spring-boot-maven-plugin</artifactId>
-                <version>${fuse.version}</version>
+                <version>${fuse.bom.version}</version>
                 <executions>
                     <execution>
                         <goals>
@@ -202,11 +153,10 @@
             <id>openshift</id>
             <build>
                 <plugins>
-
                     <plugin>
-                        <groupId>io.fabric8</groupId>
+                        <groupId>org.jboss.redhat-fuse</groupId>
                         <artifactId>fabric8-maven-plugin</artifactId>
-                        <version>${fabric8.maven.plugin.version}</version>
+                        <version>${fuse.bom.version}</version>
                         <executions>
                             <execution>
                                 <goals>
@@ -216,11 +166,33 @@
                             </execution>
                         </executions>
                     </plugin>
-
                 </plugins>
             </build>
         </profile>
     </profiles>
+
+    <repositories>
+        <repository>
+            <id>redhat-ga-repository</id>
+            <url>https://maven.repository.redhat.com/ga</url>
+            <releases>
+                <enabled>true</enabled>
+            </releases>
+            <snapshots>
+                <enabled>false</enabled>
+            </snapshots>
+        </repository>
+        <repository>
+            <id>redhat-ea-repository</id>
+            <url>https://maven.repository.redhat.com/earlyaccess/all</url>
+            <releases>
+                <enabled>true</enabled>
+            </releases>
+            <snapshots>
+                <enabled>false</enabled>
+            </snapshots>
+        </repository>
+    </repositories>
 
     <pluginRepositories>
         <pluginRepository>
