@@ -2,10 +2,13 @@ package io.fabric8.quickstarts.camel.config;
 
 import com.github.javafaker.Faker;
 import org.apache.camel.builder.RouteBuilder;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Component;
 
 @Component
 public class OCP3AMQProducer extends RouteBuilder {
+
 
     @Override
     public void configure() throws Exception {
