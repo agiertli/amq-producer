@@ -25,7 +25,6 @@ public class ActiveMqConfiguration {
     public ActiveMQComponent activeMq(PooledConnectionFactory pooledConnectionFactory) {
         ActiveMQComponent activeMqComponent = new ActiveMQComponent();
         activeMqComponent.setConnectionFactory(pooledConnectionFactory);
-        activeMqComponent.setCacheLevelName("CACHE_CONSUMER");
 
         return activeMqComponent;
     }
