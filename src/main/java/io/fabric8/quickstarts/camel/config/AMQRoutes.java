@@ -7,7 +7,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Component;
 
 @Component
-public class OCP3AMQProducer extends RouteBuilder {
+public class AMQRoutes extends RouteBuilder {
 
 
     @Override

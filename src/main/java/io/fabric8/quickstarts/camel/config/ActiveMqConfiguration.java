@@ -60,18 +60,14 @@ public class ActiveMqConfiguration {
     @Primary
     public PooledConnectionFactory producerPooledConnectionFactory() {
         PooledConnectionFactory pcf =  new PooledConnectionFactory(producerConnectionFactory());
-        Properties props = new Properties();
-        props.setProperty("maxConnections","1");
-        pcf.setProperties(props);
+        pcf.getProperties().setProperty("maxConnections","1");
         return pcf;
     }
 
     @Bean("consumerpcf")
     public PooledConnectionFactory consumerPooledConnectionFactory() {
         PooledConnectionFactory pcf =  new PooledConnectionFactory(consumerConnectionFactory());
-        Properties props = new Properties();
-        props.setProperty("maxConnections","1");
-        pcf.setProperties(props);
+        pcf.getProperties().setProperty("maxConnections","1");
         return pcf;
     }
 
