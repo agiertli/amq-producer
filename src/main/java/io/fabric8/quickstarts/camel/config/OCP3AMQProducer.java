@@ -14,7 +14,7 @@ public class OCP3AMQProducer extends RouteBuilder {
     public void configure() throws Exception {
 
         from("timer:foo?fixedRate=true&period=5000").bean(this, "generateFakePerson()").to("log:info")
-               .to("activemq:queue:test");
+               .to("activemq:queue:test?connectionFactory=#myCF");
 
     }
 

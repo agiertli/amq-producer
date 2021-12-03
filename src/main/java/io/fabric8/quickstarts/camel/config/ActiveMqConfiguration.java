@@ -26,28 +26,30 @@ public class ActiveMqConfiguration {
     private static final Logger logger = LoggerFactory.getLogger(ActiveMqConfiguration.class.getName());
 
 
-    @Bean("activemq")
-    public ActiveMQComponent activeMq(PooledConnectionFactory pooledConnectionFactory) {
-        ActiveMQComponent activeMqComponent = new ActiveMQComponent();
-        activeMqComponent.setConnectionFactory(pooledConnectionFactory);
-        activeMqComponent.setCacheLevelName("CACHE_CONSUMER");
-
-
-        return activeMqComponent;
-    }
+//    @Bean("activemq")
+//    public ActiveMQComponent activeMq(PooledConnectionFactory pooledConnectionFactory) {
+//        ActiveMQComponent activeMqComponent = new ActiveMQComponent();
+//        activeMqComponent.setConnectionFactory(connectionFactory());
+//        activeMqComponent.setCacheLevelName("CACHE_CONSUMER");
+//
+//
+//        return activeMqComponent;
+//    }
+//
+//    @Bean
+//    public PooledConnectionFactory pooledConnectionFactory() {
+//        return new PooledConnectionFactory(connectionFactory());
+//    }
 
     @Bean
-    public PooledConnectionFactory pooledConnectionFactory() {
-        return new PooledConnectionFactory(connectionFactory());
-    }
-
-    private ActiveMQConnectionFactory connectionFactory() {
+    public ActiveMQConnectionFactory myCF() {
 
         logger.info("Configuring connection factory with brokerUrl {}, username {} and password ****", brokerURL, userName);
         ActiveMQConnectionFactory connectionFactory = new ActiveMQConnectionFactory();
         connectionFactory.setBrokerURL(brokerURL);
         connectionFactory.setUserName(userName);
         connectionFactory.setPassword(password);
+
 
         return connectionFactory;
     }
